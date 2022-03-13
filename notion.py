@@ -60,11 +60,7 @@ def main():
     df.reset_index(drop=True, inplace=True)
     # print(df.head())
 
-<<<<<<< HEAD
     pid = df.loc[0, 'id']
-=======
-    pid = "ce68e4f6-2a09-4c88-b20f-77dd55c0d0e6"
->>>>>>> 80ccad2527fdfa5937047d5b59dac6e98ce1cf31
     block = query_block(pid)
     # print(block)
     # process_block(block)
