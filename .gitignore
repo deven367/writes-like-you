@@ -106,3 +106,4 @@ dist
 # ignore these py files
 constants.py
 tempCodeRunnerFile.py
+__pycache__/
