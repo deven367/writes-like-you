@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# ignore these py files
+constants.py
+tempCodeRunnerFile.py
