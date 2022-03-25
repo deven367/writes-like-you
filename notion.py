@@ -51,6 +51,15 @@ def main():
         ids.append(result['id'])
         dates.append(result['created_time'])
 
+    print(len(data['results']))
+
+    while data['has_more']:
+        payload['start_cursor'] = data['next_cursor']
+        data = query_db(NOTION_DATABASE_ID)
+        for result in data['results']:
+            ids.append(result['id'])
+            dates.append(result['created_time'])
+
     df = pd.DataFrame(data={"id": ids, "ts": dates})
     df['ts'] = pd.to_datetime(df['ts'])
     # print(df.info())
