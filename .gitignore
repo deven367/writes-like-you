@@ -107,3 +107,4 @@ dist
 constants.py
 tempCodeRunnerFile.py
 __pycache__/
+.vscode
