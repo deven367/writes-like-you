@@ -109,3 +109,4 @@ tempCodeRunnerFile.py
 __pycache__/
 .vscode
 data.csv
+.ipynb_checkpoints
