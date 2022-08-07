@@ -49,20 +49,20 @@ const querydb = async () => {
     })
     // console.log(response);
     response.options
-    console.log(response.page);
-    // response.results.forEach(page => {
-    //     console.log(page);
-    // });
-};
-// querydb();
-
-(async () => {
-    const blockId = '';
-    const response = await notion.blocks.retrieve({
-      block_id: blockId,
+    // console.log(response.page);
+    response.results.forEach(page => {
+        console.log(page);
     });
-    console.log(response);
-    // response.results.forEach(block => {
-    //         console.log(block);
-    // });
-  })();
+};
+querydb();
+
+// (async () => {
+//     const blockId = '';
+//     const response = await notion.blocks.retrieve({
+//       block_id: blockId,
+//     });
+//     console.log(response);
+//     // response.results.forEach(block => {
+//     //         console.log(block);
+//     // });
+//   })();
