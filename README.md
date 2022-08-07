@@ -1,4 +1,4 @@
-# notion-proj
+# Writes like you!
 
 This is just a fun project I am working on to essentially **train a language model to write like me** with all the text that I have written in Notion over the course of 2 years.
 
