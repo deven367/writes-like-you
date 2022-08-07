@@ -92,8 +92,10 @@ def main():
     #     text = process_block(block)
     #     texts.append(text)
 
-    df['text'] = df.apply(lambda x: process_block(query_block(x['id'])), axis=1)
-    df.to_csv("data.csv", index=False)
+    # df['text'] = df.apply(lambda x: process_block(query_block(x['id'])), axis=1)
+    df['text'] = list(map(process_block, map(query_block, df['id'])))
+    name = input('Enter name of the csv file')
+    df.to_csv(f"{name}.csv", index=False)
 
 
 if __name__ == "__main__":
