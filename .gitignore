@@ -110,3 +110,4 @@ __pycache__/
 .vscode
 data.csv
 .ipynb_checkpoints
+constants.py
