@@ -17,12 +17,33 @@ This is just a fun project I am working on to essentially **train a language mod
 
 This project assumes that you have setup your `Notion Developer Account` and have the secret `NOTION_TOKEN` and the `NOTION_DATABASE_ID` that you wish to query.
 
-In `constants.py`, you need to declare two variables, `NOTION_TOKEN` and `NOTION_DATABASE_ID`.
+Requires Python 3.13 or newer and uv. `.python-version` pins local commands to Python 3.13.
 
-```python
-# contents of constants.py
-NOTION_TOKEN = 'your_secret_notion_token'
-NOTION_DATABASE_ID = 'id_of_your_notion_database'
+Set up the project with uv and make:
+
+```sh
+make sync
+test -f .env || cp .env.example .env
+chmod 600 .env
 ```
 
-Once, these variables are defined. Simply run the `notion.py` using the command `python notion.py`. The file will recursively query the database and extract all the textual content in all the pages, and then create a `data.csv` containing the `date`, `id`, and the `text` in the database.
+Dependencies are declared in `pyproject.toml`; `uv.lock` records the exact versions. `make sync` installs the locked environment. After changing dependencies, run `uv lock` to update the lockfile.
+
+Set `NOTION_TOKEN` and `NOTION_DATABASE_ID` in the project-root `.env`. This file is ignored by Git. `wlu/config.py` loads it at CLI startup, independently of the working directory. Environment variables take precedence over `.env` values.
+
+The Makefile has only three targets: `make sync`, `make test`, and `make run`. `make test` runs the offline behavioral and configuration checks without Notion credentials or API requests.
+
+Application source lives in `wlu/`; notebooks live in the root-level `nbs/` folder. Run `make run` to write `data.csv` without an interactive prompt. Choose another full output path with `make run OUTPUT=daily.csv`, or invoke the CLI directly with `uv run --locked python -m wlu --output daily.csv`.
+
+The CSV contains exactly one row per **UTC creation date**, sorted by date:
+
+* `id`: comma-separated IDs of all Notion pages merged into the row.
+* `ts`: the earliest creation timestamp for that date.
+* `date`: the UTC date derived from `created_time`, not a custom Notion date property.
+* `text`: all entries in timestamp order, separated by blank lines. Rich-text segments, paginated blocks, headings, lists, and nested blocks are included.
+
+Requests run sequentially to respect Notion's rate limit. API failures stop the export instead of silently saving missing text. Existing CSV snapshots are not rewritten; rerun the exporter to generate a daily-merged file.
+
+For fine-tuning, run `make run` to create the ignored `data.csv` in the project root, then open `nbs/finetune.ipynb` with `nbs/` as the notebook working directory. The notebook installs its separate training dependencies.
+
+To run Python commands directly, activate the environment with `source .venv/bin/activate`.
