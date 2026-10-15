@@ -104,10 +104,9 @@ dist
 .tern-port
 
 # ignore these py files
-constants.py
 tempCodeRunnerFile.py
 __pycache__/
 .vscode
 data.csv
 .ipynb_checkpoints
-constants.py
+.venv/
